@@ -40,8 +40,14 @@ public class BaseEntity {
         // user
         this.updateTime = Tools.getGMT8Time();
     }
+
     public void setCreate() {
         // user
+        this.create_by = "admin";
+        this.createById = 0L;
+        this.updateBy = "admin";
+        this.delFlag = 0;
+        this.updateById = 0L;
         this.updateTime = Tools.getGMT8Time();
         this.createTime = Tools.getGMT8Time();
     }

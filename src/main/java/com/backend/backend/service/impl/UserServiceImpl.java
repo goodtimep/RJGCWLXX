@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setSalt(Tools.getRandomString(20)); // 获取长度为20的盐
         String saltPass = addSaltForPassword(user.getUserPassword(), user.getSalt());// shiro中加密必须要用Md5Hash
         user.setUserPassword(saltPass);
-        user.setPermission(1); // 普通用户注册
+        user.setType(1); // 普通用户注册
         user.setCreate();
         this.save(user);
         return user;

@@ -11,30 +11,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Api("测试")
 @RestController
-public class HelloController {
+@RequestMapping("/user")
+public class UserController {
     @Autowired
     private UserService userServiceImpl;
 
     @GetMapping("/")
     @ResponseBody
-    @RequiresPermissions("user:tt")
     public String hello() {
         return "hello world!";
     }
 
     @GetMapping("/test")
     @ResponseBody
-    @RequiresPermissions("user:test")
     public String test() {
         return "hello test!";
     }
 
-    @GetMapping("/login")
+    @ApiOperation(value = "注册", notes = "注册用户 参数示例：{\n" +
+            "\t\"username\":\"goodtimp\",\n" +
+            "\t\"password\":\"123456\"\n" +
+            "}")
+    @PostMapping("/login")
     @ResponseBody
-    public ResponseModel login(String name, String password, HttpServletResponse httpServletResponse) {
+    public ResponseModel login(@RequestBody Map<String, Object> map, HttpServletResponse httpServletResponse) {
+        String name = (String) map.get("username");
+        String password = (String) map.get("password");
         // 查询数据库中的帐号信息
         User user = userServiceImpl.login(name, password);
 
@@ -49,8 +55,14 @@ public class HelloController {
         return ResponseModel.success("Login Success.");
     }
 
-    @ApiOperation(value = "注册", notes = "注册用户")
-    @PostMapping("signIn")
+    @ApiOperation(value = "注册", notes = "注册用户:参数示例：" +
+            "{\n" +
+            "\t\"name\":\"goodtimp\",\n" +
+            "\t\"userName\":\"goodtimp\",\n" +
+            "\t\"userPassword\":\"123456\",\n" +
+            "\t\"phone\":\"123\"\n" +
+            "}")
+    @PostMapping("/signIn")
     @ResponseBody
     public ResponseModel signIn(@RequestBody User user) {
         User sqlUser = userServiceImpl.signIn(user);

@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  * @description :  用户表
  */
 @Data
-@TableName("blog_user")
+@TableName("user")
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "用户实体类")
@@ -30,27 +30,26 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "userId", value = "用户Id")
     private Long userId;
 
-    @NotNull
+
     @ApiModelProperty(name = "userPassword", value = "用户password")
     private String userPassword;
 
-    @NotNull
     @ApiModelProperty(name = "userName", value = "userName")
     private String userName;
 
-    @NotNull
+    @ApiModelProperty(name = "userName", value = "userName")
+    private String name;
+
     @ApiModelProperty(name = "phone", value = "phone")
     private String phone;
 
     /**
-     * 1普通用户 2权限用户 3管理员
+     * 用户类型1用户，2驿站管理员。默认1
      */
-    @Min(1)
-    @Max(3)
-    private Integer permission;
+    private Integer type = 1;
 
-    @ApiModelProperty(name = "avatar", value = "avatar")
-    private String avatar;
+//    @ApiModelProperty(name = "avatar", value = "avatar")
+//    private String avatar;
 
     /**
      * 密码加盐

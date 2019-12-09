@@ -21,7 +21,7 @@ public class BackendApplicationTests {
     public void testRedis() {
         User user = new User();
         user.setUserId(1L);
-        user.setPermission(1);
+        user.setType(1);
         user.setPhone("phone");
         user.setUserName("name");
         user.setUserPassword("123");

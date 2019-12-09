@@ -69,23 +69,23 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String token = (String) authenticationToken.getCredentials();
-        // 解密获得account，用于和数据库进行对比
-        String userId = JwtUtil.getClaim(token, PAYLOAD_USER_TAG.getCode());
-        // 帐号为空
-        if (StringUtil.isBlank(userId)) {
-            throw new AuthenticationException("Token中帐号为空(The account in Token is empty.)");
-        }
-        // 查询用户是否存在 todo: 是否可以去除用户查询，当删除用户时refreshToken也会被删除？
-//        User user = userServiceImpl.getById(Long.parseLong(userId));
-//        if (user == null) {
-//            throw new AuthenticationException("该帐号不存在(The account does not exist.)");
+//        String token = (String) authenticationToken.getCredentials();
+//        // 解密获得account，用于和数据库进行对比
+//        String userId = JwtUtil.getClaim(token, PAYLOAD_USER_TAG.getCode());
+//        // 帐号为空
+//        if (StringUtil.isBlank(userId)) {
+//            throw new AuthenticationException("Token中帐号为空(The account in Token is empty.)");
 //        }
-        // 开始认证，要AccessToken认证通过，且Redis中存在RefreshToken，且两个Token时间戳一致
-        if (JwtUtil.verify(token) && JwtUtil.judgeRefreshToken(token)) {
-            return new SimpleAuthenticationInfo(token, token, "userRealm");
-        }
-        throw new AuthenticationException("Token已过期(Token expired or incorrect.)");
+//        // 查询用户是否存在 todo: 是否可以去除用户查询，当删除用户时refreshToken也会被删除？
+////        User user = userServiceImpl.getById(Long.parseLong(userId));
+////        if (user == null) {
+////            throw new AuthenticationException("该帐号不存在(The account does not exist.)");
+////        }
+//        // 开始认证，要AccessToken认证通过，且Redis中存在RefreshToken，且两个Token时间戳一致
+////        if (JwtUtil.verify(token) && JwtUtil.judgeRefreshToken(token)) {
+            return new SimpleAuthenticationInfo(null, null, "userRealm");
+//        }
+//        throw new AuthenticationException("Token已过期(Token expired or incorrect.)");
     }
 
 }

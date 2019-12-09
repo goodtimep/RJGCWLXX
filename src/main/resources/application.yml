@@ -1,7 +1,7 @@
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 8000
+  port: 8081
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -15,9 +15,9 @@ spring:
   #配置数据库
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.107.80.19:3306/blog2?useUnicode=true&characterEncoding=utf8
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/rjgc?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: mni722
   # 配置redis
   redis:
     host: 127.0.0.1
