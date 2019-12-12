@@ -21,7 +21,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User getUserByPhone(String phone) {
-        return null;
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(User::getPhone, phone).eq(User::getDelFlag, DelFlagEnum.NORMAL.getCode());
+        return this.getOne(queryWrapper);
     }
 
     @Override
@@ -30,12 +32,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(User::getUserName, username).eq(User::getDelFlag, DelFlagEnum.NORMAL.getCode());
         User user = this.getOne(queryWrapper);
-        if (user == null) throw new UserException("用户信息不存在");
-
+        if (user == null) {
+            throw new UserException("用户信息不存在");
+        }
         String loginPassword = addSaltForPassword(password, user.getSalt());
         if (loginPassword.equals(user.getUserPassword())) {
             return user;
-        } else throw new UserException("用户名或密码错误");
+        } else {
+            throw new UserException("用户名或密码错误");
+        }
     }
 
 
@@ -58,11 +63,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (sqlUser != null) {
             return null;
         }
-
-        user.setSalt(Tools.getRandomString(20)); // 获取长度为20的盐
-        String saltPass = addSaltForPassword(user.getUserPassword(), user.getSalt());// shiro中加密必须要用Md5Hash
+        // 获取长度为20的盐
+        user.setSalt(Tools.getRandomString(20));
+        // shiro中加密必须要用Md5Hash
+        String saltPass = addSaltForPassword(user.getUserPassword(), user.getSalt());
         user.setUserPassword(saltPass);
-        user.setType(1); // 普通用户注册
         user.setCreate();
         this.save(user);
         return user;
@@ -75,6 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     private String addSaltForPassword(String password, String salt) {
-        return new Md5Hash(password, salt, 2).toString();// shiro中默认加密必须要用Md5Hash
+        // shiro中默认加密必须要用Md5Hash
+        return new Md5Hash(password, salt, 2).toString();
     }
 }

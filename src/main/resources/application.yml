@@ -15,7 +15,7 @@ spring:
   #配置数据库
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rjgc?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/rjgc?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&allowMultiQueries=true&useAffectedRows=true
     username: root
     password: mni722
   # 配置redis

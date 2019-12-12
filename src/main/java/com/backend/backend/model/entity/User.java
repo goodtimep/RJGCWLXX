@@ -30,7 +30,6 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "userId", value = "用户Id")
     private Long userId;
 
-
     @ApiModelProperty(name = "userPassword", value = "用户password")
     private String userPassword;
 
@@ -47,9 +46,6 @@ public class User extends BaseEntity {
      * 用户类型1用户，2驿站管理员。默认1
      */
     private Integer type = 1;
-
-//    @ApiModelProperty(name = "avatar", value = "avatar")
-//    private String avatar;
 
     /**
      * 密码加盐

@@ -8,12 +8,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-@Api("测试")
+/**
+ * 用户控制器
+ *
+ * @author goodtimp
+ */
+@Api("用户接口")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -26,10 +32,12 @@ public class UserController {
         return "hello world!";
     }
 
-    @GetMapping("/test")
+    @GetMapping("/getCurrent")
     @ResponseBody
-    public String test() {
-        return "hello test!";
+    @ApiOperation(value = "得到当前登陆用户信息")
+    public ResponseModel getCurrent() {
+        User user = JwtUtil.getCurrentUser();
+        return ResponseModel.success("data", user);
     }
 
     @ApiOperation(value = "注册", notes = "注册用户 参数示例：{\n" +
@@ -46,9 +54,9 @@ public class UserController {
 
         // 新增token信息,如果已经有登陆过了下面会刷新refreshToken的时间戳，使得先登录的被t除去
         String currentTimeMillis = String.valueOf(System.currentTimeMillis());
-        String token = JwtUtil.sign(user.getUserId().toString(), currentTimeMillis);
+        String token = JwtUtil.sign(user.getUserId().toString(), user.getUserName(), user.getType().toString(), currentTimeMillis);
         // 添加refreshToken
-        JwtUtil.addRefreshToken(user.getUserId().toString(), currentTimeMillis);
+        JwtUtil.addRefreshToken(user.getUserId().toString(), user.getUserName(), currentTimeMillis);
         // 修改sAuthorization返回AccessToken，时间戳为当前时间戳
         httpServletResponse.setHeader("Authorization", token);
         httpServletResponse.setHeader("Access-Control-Expose-Headers", "Authorization");
@@ -61,6 +69,7 @@ public class UserController {
             "\t\"userName\":\"goodtimp\",\n" +
             "\t\"userPassword\":\"123456\",\n" +
             "\t\"phone\":\"123\"\n" +
+            "\t\"type\":\"1（用户类型1用户，2驿站管理员）\"\n" +
             "}")
     @PostMapping("/signIn")
     @ResponseBody
