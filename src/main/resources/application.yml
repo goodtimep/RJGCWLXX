@@ -1,7 +1,7 @@
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 8082
+  port: 8083
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -15,18 +15,19 @@ spring:
   #配置数据库
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rjgc?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&allowMultiQueries=true&useAffectedRows=true
-    username: root
-    password: mni722
+    url: jdbc:mysql://www.gqiming.wang:3306/rjgc?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&allowMultiQueries=true&useAffectedRows=true
+    username: rjgc
+    password: 123456
   # 配置redis
   redis:
-    host: 127.0.0.1
+    host:  47.107.80.19
     #    password: ""
+    password: "mni722"
     # 数据库索引 默认0
     database: 0
     port: 6379
     # 超时时间 Duration类型 3秒
-    timeout: 3S
+    timeout: 30S
 
 # logback
 logging:

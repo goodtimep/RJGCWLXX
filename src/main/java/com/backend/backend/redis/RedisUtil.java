@@ -40,6 +40,7 @@ public class RedisUtil {
     public static Boolean expire(String key, Long time) {
         try {
             if (time > 0) {
+                
                 redisTemplate.expire(key, time, TimeUnit.MILLISECONDS);
             }
             return true;

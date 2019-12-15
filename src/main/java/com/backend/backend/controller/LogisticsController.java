@@ -51,7 +51,7 @@ public class LogisticsController {
         if (logistics == null) {
             return ResponseModel.fail("新增失败");
         }
-        return ResponseModel.success("新增成功");
+        return ResponseModel.success("新增成功").addExtend("data",logistics);
     }
 
     @ApiOperation(value = "更新", notes = "修改:参数示例：{logId:'123'," +
@@ -62,9 +62,9 @@ public class LogisticsController {
     public ResponseModel update(@RequestBody Logistics logistics) {
         logistics = logisticsServiceImpl.updateLogistics(logistics);
         if (logistics == null) {
-            return ResponseModel.fail("新增失败");
+            return ResponseModel.fail("修改失败");
         }
-        return ResponseModel.success("新增成功");
+        return ResponseModel.success("修改成功").addExtend("data",logistics);
     }
 
     @ApiOperation(value = "删除", notes = "修改:参数示例：{id:'123'}")

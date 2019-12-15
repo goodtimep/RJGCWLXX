@@ -60,7 +60,7 @@ public class UserController {
         // 修改sAuthorization返回AccessToken，时间戳为当前时间戳
         httpServletResponse.setHeader("Authorization", token);
         httpServletResponse.setHeader("Access-Control-Expose-Headers", "Authorization");
-        return ResponseModel.success("Login Success.");
+        return ResponseModel.success("Login Success.").addExtend("data", user);
     }
 
     @ApiOperation(value = "注册", notes = "注册用户:参数示例：" +

@@ -17,23 +17,5 @@ public class BackendApplicationTests {
     public void contextLoads() {
     }
 
-    @Test
-    public void testRedis() {
-        User user = new User();
-        user.setUserId(1L);
-        user.setType(1);
-        user.setPhone("phone");
-        user.setUserName("name");
-        user.setUserPassword("123");
-        RedisUtil.set(user.getUserId().toString(), user);
-        User temp = (User) RedisUtil.get(user.getUserId().toString());
-        System.out.println(temp.toString());
-    }
 
-    @Test
-    public void testRedis2() {
-        String currentTimeMillis = String.valueOf(System.currentTimeMillis());
-        System.out.println(Long.parseLong(REFRESH_TOKEN_EXPIRE_TIME.getCode()));
-        RedisUtil.set("222", currentTimeMillis, Long.parseLong(REFRESH_TOKEN_EXPIRE_TIME.getCode()) * 1000L);
-    }
 }
